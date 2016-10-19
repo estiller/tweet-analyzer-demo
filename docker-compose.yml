@@ -3,6 +3,8 @@ version: "2"
 services:
   reader:
     build: ./reader
+    links: 
+      - rabbitmq
 
   rabbitmq:
     image: rabbitmq:3.6.5
