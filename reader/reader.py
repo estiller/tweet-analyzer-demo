@@ -26,6 +26,7 @@ class MyStreamer(TwythonStreamer):
     def on_success(self, data):
         if 'text' in data:
             output_data = {
+                'id': data['id'],
                 'text': data['text']
             }
             serialized_data = json.dumps(output_data)

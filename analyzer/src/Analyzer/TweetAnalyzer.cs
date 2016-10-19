@@ -8,6 +8,7 @@ namespace Analyzer
         {
             return new AnalyzedTweet
             {
+                Id = tweet.Id,
                 Text = tweet.Text,
                 Sentiment = Sentiment.Neutral
             };

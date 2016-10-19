@@ -23,13 +23,13 @@ namespace Analyzer
                 throw new InvalidOperationException();
 
             var consumer = new EventingBasicConsumer(Channel);
-            consumer.Received += (ch, ea) =>
+            consumer.Received += (sender, ea) =>
                             {
                                 var messageBody = System.Text.Encoding.UTF8.GetString(ea.Body);
                                 var tweet = JsonConvert.DeserializeObject<Tweet>(messageBody);
                                 TweetRecieved?.Invoke(this, tweet);
                                 
-                                ((IModel) ch).BasicAck(ea.DeliveryTag, false);
+                                Channel.BasicAck(ea.DeliveryTag, false);
                             };
             _consumerTag = Channel.BasicConsume(QueueName, false, consumer);
         }
