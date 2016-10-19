@@ -1,5 +1,6 @@
 import json
 import pika
+import time
 from twython import TwythonStreamer
 
 class TwitterConfiguration:
@@ -29,7 +30,14 @@ class MyStreamer(TwythonStreamer):
         print(status_code)
 
 
-pika_connection = pika.BlockingConnection(pika.ConnectionParameters('rabbitmq'))
+pika_connection = None
+while pika_connection == None:
+    try:
+        pika_connection = pika.BlockingConnection(pika.ConnectionParameters('rabbitmq'))
+    except pika.exceptions.ConnectionClosed:
+        print("RabbitMQ connection still closed. Retrying.")
+        time.sleep(5)
+
 pika_channel = pika_connection.channel()
 pika_channel.queue_declare(queue='tweets')
 
