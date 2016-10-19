@@ -7,4 +7,6 @@ services:
       - rabbitmq
 
   rabbitmq:
-    image: rabbitmq:3.6.5
+    image: rabbitmq:3.6.5-management
+    ports: 
+     - "8080:15672"
