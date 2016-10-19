@@ -1,3 +1,4 @@
+import argparse
 import configparser
 import json
 import pika
@@ -35,10 +36,15 @@ class MyStreamer(TwythonStreamer):
         print(status_code)
 
 
+parser = argparse.ArgumentParser(description='Read tweets and put them into a queue.')
+parser.add_argument('--rabbitmq', '-r', dest='rabbitmq_host', default='localhost',
+                    help='The hostname of the RabbitMQ host')
+args = parser.parse_args()
+
 connection = None
 while connection == None:
     try:
-        connection = pika.BlockingConnection(pika.ConnectionParameters('rabbitmq'))
+        connection = pika.BlockingConnection(pika.ConnectionParameters(args.rabbitmq_host))
     except pika.exceptions.ConnectionClosed:
         print("RabbitMQ connection still closed. Retrying.")
         time.sleep(5)
