@@ -9,6 +9,7 @@ namespace Analyzer
     public static class Program
     {
         private const string RabbitMQHost = "rabbitmq";
+        private const string ApiKey = "apikey";
 
         private static readonly Dictionary<string, string> DefaultConfig = new Dictionary<string, string>
         {
@@ -19,11 +20,12 @@ namespace Analyzer
         {
             var configBuilder = new ConfigurationBuilder();
             configBuilder.AddInMemoryCollection(DefaultConfig);
+            configBuilder.AddJsonFile("secrets.json");
             configBuilder.AddCommandLine(args);
             var configuration = configBuilder.Build();
 
             var tweetConsumer = new TweetConsumer(configuration[RabbitMQHost]);
-            var tweetAnalyzer = new TweetAnalyzer();
+            var tweetAnalyzer = new TweetAnalyzer(configuration[ApiKey]);
             var tweetPublisher = new TweetPublisher(configuration[RabbitMQHost]);
 
             Observable.FromEventPattern<TweetRecievedEventArgs>(handler => tweetConsumer.TweetRecieved += handler, handler => tweetConsumer.TweetRecieved -= handler)
