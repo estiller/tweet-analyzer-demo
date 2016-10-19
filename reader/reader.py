@@ -1,17 +1,20 @@
+import configparser
 import json
 import pika
+import sys
 import time
 from twython import TwythonStreamer
 
 class TwitterConfiguration:
     def __init__(self):
-        with open('twitter_key.json') as jsonData:
-            data = json.load(jsonData)
+        config_parser = configparser.ConfigParser()
+        config_parser.read('config.ini')
+        twitter_section = config_parser['Twitter']
 
-        self.consumer_key = data['consumer_key']
-        self.consumer_secret = data['consumer_secret']
-        self.access_token = data['access_token']
-        self.access_token_secret = data['access_token_secret']
+        self.consumer_key = twitter_section['ConsumerKey']
+        self.consumer_secret = twitter_section['ConsumerSecret']
+        self.access_token = twitter_section['AccessToken']
+        self.access_token_secret = twitter_section['AccessTokenSecret']
 
 
 class MyStreamer(TwythonStreamer):
