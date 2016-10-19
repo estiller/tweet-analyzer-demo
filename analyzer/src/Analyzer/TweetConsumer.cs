@@ -1,5 +1,6 @@
 using Analyzer.Model;
 using System;
+using System.Collections.Generic;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
@@ -27,9 +28,11 @@ namespace Analyzer
                             {
                                 var messageBody = System.Text.Encoding.UTF8.GetString(ea.Body);
                                 var tweet = JsonConvert.DeserializeObject<Tweet>(messageBody);
-                                TweetRecieved?.Invoke(this, tweet);
-                                
-                                Channel.BasicAck(ea.DeliveryTag, false);
+                                TweetRecieved?.Invoke(this, new TweetRecievedEventArgs
+                                {
+                                    Tweet = tweet,
+                                    TweetDeliveryTag = ea.DeliveryTag
+                                });
                             };
             _consumerTag = Channel.BasicConsume(QueueName, false, consumer);
         }
@@ -43,6 +46,14 @@ namespace Analyzer
             _consumerTag = null;
         }
 
-        public event EventHandler<Tweet> TweetRecieved;
+        public void AckTweets(IEnumerable<ulong> deliveryTags)
+        {
+            foreach (var deliveryTag in deliveryTags)
+            {
+                Channel.BasicAck(deliveryTag, false);
+            }
+        }
+
+        public event EventHandler<TweetRecievedEventArgs> TweetRecieved;
     }
 }

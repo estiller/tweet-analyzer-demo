@@ -1,7 +1,7 @@
 using Analyzer.Model;
 using System;
+using System.Collections.Generic;
 using Newtonsoft.Json;
-using RabbitMQ.Client;
 
 namespace Analyzer
 {
@@ -14,13 +14,16 @@ namespace Analyzer
         {
         }
 
-        public void PublishTweet(AnalyzedTweet tweet)
+        public void PublishTweets(IEnumerable<AnalyzedTweet> tweets)
         {
-            var serializedTweet = JsonConvert.SerializeObject(tweet);
-            var encoded = System.Text.Encoding.UTF8.GetBytes(serializedTweet);
-            Channel.BasicPublish(String.Empty, QueueName, false, null, encoded);
+            foreach (var tweet in tweets)
+            {
+                var serializedTweet = JsonConvert.SerializeObject(tweet);
+                var encoded = System.Text.Encoding.UTF8.GetBytes(serializedTweet);
+                Channel.BasicPublish(String.Empty, QueueName, false, null, encoded);
 
-            Console.WriteLine($"Published: {serializedTweet}");
-        }
+                Console.WriteLine($"Published: {serializedTweet}");
+             }
+       }
     }
 }

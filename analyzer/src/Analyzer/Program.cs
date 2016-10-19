@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reactive.Linq;
 using Microsoft.Extensions.Configuration;
 
 namespace Analyzer
@@ -23,12 +26,15 @@ namespace Analyzer
             var tweetAnalyzer = new TweetAnalyzer();
             var tweetPublisher = new TweetPublisher(configuration[RabbitMQHost]);
 
-            tweetConsumer.TweetRecieved += (sender, tweet) =>
-            {
-                var analyzedTweet = tweetAnalyzer.Analyze(tweet);
-                tweetPublisher.PublishTweet(analyzedTweet);
-            };            
-            tweetConsumer.StartConsuming();
+            Observable.FromEventPattern<TweetRecievedEventArgs>(handler => tweetConsumer.TweetRecieved += handler, handler => tweetConsumer.TweetRecieved -= handler)
+                .Select(pattern => pattern.EventArgs)
+                .Buffer(TimeSpan.FromSeconds(5), 1000)
+                .Select(recievedTweets => new { RecievedTweets = recievedTweets, Analyzed = tweetAnalyzer.AnalyzeTweets(recievedTweets.Select(recievedArgs => recievedArgs.Tweet))})
+                .ForEachAsync(items => {
+                    tweetPublisher.PublishTweets(items.Analyzed);
+                    tweetConsumer.AckTweets(items.RecievedTweets.Select(item => item.TweetDeliveryTag));
+                });
+            tweetConsumer.StartConsuming();            
         }
     }
 }

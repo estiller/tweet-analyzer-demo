@@ -9,7 +9,8 @@
     "Newtonsoft.Json": "9.0.1",
     "Microsoft.Extensions.Configuration": "1.0.0",
     "Microsoft.Extensions.Configuration.CommandLine": "1.0.0",
-    "Polly": "4.5.0-beta-netstandar-*"
+    "Polly": "4.5.0-beta-netstandar-*",
+    "System.Reactive.Linq": "3.0.0"
   },
   "frameworks": {
     "netcoreapp1.0": {
