@@ -36,7 +36,7 @@ namespace Analyzer
 
             var request = new SentimentRequest
             {
-                Documents = tweets.Select(tweet => new SentimentRequestDocument { Id = tweet.Id, Text = tweet.Text }).ToArray()
+                Documents = tweets.Distinct(new TweetEqualityComparer()).Select(tweet => new SentimentRequestDocument { Id = tweet.Id, Text = tweet.Text }).ToArray()
             };
             if (!request.Documents.Any())
             {
@@ -85,6 +85,19 @@ namespace Analyzer
             if (score > 0.66)
                 return Sentiment.Positive;
             return Sentiment.Neutral;
+        }
+
+        private class TweetEqualityComparer : IEqualityComparer<Tweet>
+        {
+            public bool Equals(Tweet x, Tweet y)
+            {
+                return x?.Id.Equals(y?.Id) ?? false;
+            }
+
+            public int GetHashCode(Tweet obj)
+            {
+                return obj.Id.GetHashCode();
+            }
         }
 
         private class SentimentRequest

@@ -15,3 +15,12 @@ services:
     build: ./analyzer
     links:
       - rabbitmq
+
+  aggregator:
+    build: ./aggregator
+    links: 
+      - rabbitmq
+      - redis
+
+  redis:
+    image: redis:3.2.4-alpine
