@@ -1,0 +1,9 @@
+{
+  "name": "tweet-analyzer-demo",
+  "dependencies": {
+    "chart.js": "registry:npm/chart.js#2.1.4+20160615174920"
+  },
+  "globalDependencies": {
+    "angular": "registry:dt/angular#1.5.0+20161016133926"
+  }
+}
