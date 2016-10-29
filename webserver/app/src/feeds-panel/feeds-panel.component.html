@@ -1,11 +1,12 @@
 <div class="feed-wrapper well">
 	<div class="row topic-row">
-		<div class="col-md-4">
+		<div class="col-xs-4">
 			<img ng-src="{{$ctrl.config.img}}" alt="" class="feed-image">
 		</div>
-		<div class="col-md-8">
-			<div>
-				<canvas id="bar" class="chart chart-bar" chart-data="$ctrl.chart.data" chart-labels="$ctrl.chart.labels" chart-options:"$ctrl.chart.options">
+		<div class="col-xs-8">
+			<div class="bar-box">
+				<canvas id="bar" class="chart chart-bar" chart-data="$ctrl.chart.data" chart-labels="$ctrl.chart.labels" chart-options:
+					"$ctrl.chart.options">
 				</canvas>
 			</div>
 		</div>

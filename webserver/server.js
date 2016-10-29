@@ -141,7 +141,7 @@ app.get('/', function (req, res) {
   res.sendFile(path.resolve(__dirname + '/app/index.html'));
 });
 app.get('/topics', function (req, res) {
-  res.json(getTopics()); getTopics()
+  res.json(getTopics());
 })
 
 server.listen(port, function () {
