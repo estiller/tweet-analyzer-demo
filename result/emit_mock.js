@@ -4,11 +4,13 @@ var amqp = require('amqplib/callback_api');
 var yargs = require('yargs').argv;
 var config = require('./server.config');
 
+var rabbitMQName = yargs.queue || config.rabbitMQDefault;
+var rabbitMQServer = yargs.qserver || config.rabbitMQServer;
+
+
 function getFeeds(ch) {
   var index = 0;
   var feeds = require('./feeds.js').feeds;
-  var rabbitMQName = yargs.queue || config.rabbitMQDefault;
-  var rabbitMQServer = yargs.qserver || config.rabbitMQServer;
 
   setInterval(function () {
     if (index >= feeds.length) {
