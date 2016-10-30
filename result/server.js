@@ -1,7 +1,9 @@
 var express = require('express');
 var yargs = require('yargs').argv;
-// var feeds = require('./feeds.js')
+var os = require("os");
+var hostname = os.hostname();
 
+// var feeds = require('./feeds.js')
 
 app = express(),
   server = require('http').Server(app),
@@ -71,16 +73,16 @@ function createFeeds() {
     },
     {
       id: 7,
-      text: "Barbara : " +sentiment,
+      text: "Barbara : " + sentiment,
       topic: "clinton",
       sentiment: -1,
       aggregateSentiment: 27,
     },
     {
       id: 8,
-      text: "Bob : "+ sentiment,
+      text: "Bob : " + sentiment,
       topic: "trump",
-      sentiment:1 ,
+      sentiment: 1,
       aggregateSentiment: 22
     }
   ];
@@ -122,6 +124,9 @@ app.get('/', function (req, res) {
 });
 app.get('/topics', function (req, res) {
   res.json(getTopics());
+});
+app.get('/hostName',function(req,res){
+  res.json(hostname);
 })
 
 server.listen(port, function () {
