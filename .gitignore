@@ -9,3 +9,4 @@ __pycache__/
 project.lock.json
 bin
 obj
+/webserver/node_modules

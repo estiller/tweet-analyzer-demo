@@ -1,0 +1,30 @@
+<div class="feed-wrapper well">
+	<div class="row topic-row">
+		<div class="col-xs-4">
+			<img ng-src="{{$ctrl.config.img}}" alt="" class="feed-image">
+		</div>
+		<div class="col-xs-8">
+			<div class="bar-box">
+				<canvas id="bar" class="chart chart-bar" chart-data="$ctrl.chart.data" chart-labels="$ctrl.chart.labels" chart-options:
+					"$ctrl.chart.options">
+				</canvas>
+			</div>
+		</div>
+	</div>
+	<div class="row feeds-row">
+		<div class="col-xs-12">
+			<ul class="feeds-panel scroll">
+				<li ng-repeat="feed in $ctrl.feeds" class="feed">
+					<div class="row">
+						<div class="col-xs-12 text">
+							<span>{{feed.text}} : {{feed.id}}</span>
+						</div>
+						<div class="col-xs-12 sentment">
+							<span>{{feed.sentiment}}</span>
+						</div>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
