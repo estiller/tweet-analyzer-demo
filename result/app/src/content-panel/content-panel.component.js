@@ -5,7 +5,7 @@ var ContentPanelComponent = (function () {
         this.$http = $http;
         this.$http.get('/topics').then(function (resolve) {
             _this.configs = resolve.data;
-            console.log(resolve);
+            var numOfColumns = _this.configs && _this.configs.length;
         });
     }
     return ContentPanelComponent;

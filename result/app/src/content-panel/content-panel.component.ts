@@ -2,13 +2,13 @@
 import { IConfig } from '../common/common';
 
 export class ContentPanelComponent {
-    public configs :IConfig[] ;
+    public configs: IConfig[];
     constructor(private $http: ng.IHttpService) {
 
         this.$http.get('/topics').then(
-            (resolve:{data:IConfig[]}) => {
+            (resolve: { data: IConfig[] }) => {
                 this.configs = resolve.data;
-                console.log(resolve);
+                let numOfColumns = this.configs && this.configs.length;
             }
         )
     }
