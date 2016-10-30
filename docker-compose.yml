@@ -25,8 +25,8 @@ services:
   redis:
     image: redis:3.2.4-alpine
 
-  webserver:
-    build: ./webserver
+  result:
+    build: ./result
     ports: 
       - "4000:80"
     links:
