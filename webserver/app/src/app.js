@@ -121,7 +121,9 @@
 	            labels: labelsList,
 	            data: this.count,
 	            options: {
-	                yAxisMinimumInterval: 1
+	                yAxisMinimumInterval: 1,
+	                scaleStartValue: 0,
+	                scaleBeginAtZero: true
 	            }
 	        };
 	        this.feeds = [];
@@ -130,7 +132,7 @@
 	            if (_this.config.topic === feed.topic) {
 	                _this.feeds.unshift(feed);
 	                // console.log("feed added");
-	                ++_this.chart.data[feed.aggregateSentiment + 1];
+	                _this.chart.data[feed.sentiment + 1] = feed.aggregateSentiment;
 	            }
 	        });
 	    }

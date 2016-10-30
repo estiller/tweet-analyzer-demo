@@ -29,59 +29,59 @@ function createFeeds() {
   return [
     {
       id: 1,
-      text: "Amy",
+      text: "Amy : " + sentiment,
+      sentiment: -1,
       topic: "trump",
-      sentiment: sentiment,
-      aggregateSentiment: -1
+      aggregateSentiment: 30
     },
     {
       id: 2,
-      text: "Scott",
+      text: "Scott : " + sentiment,
       topic: "trump",
-      sentiment: sentiment,
-      aggregateSentiment: 0
+      sentiment: -1,
+      aggregateSentiment: 31
     },
     {
       id: 3,
-      text: "Paul",
+      text: "Paul : " + sentiment,
       topic: "trump",
-      sentiment: sentiment,
-      aggregateSentiment: 1
+      sentiment: 1,
+      aggregateSentiment: 21
     },
     {
       id: 4,
-      text: "Andrew",
+      text: "Andrew : " + sentiment,
       topic: "clinton",
-      sentiment: sentiment,
-      aggregateSentiment: -1
+      sentiment: 1,
+      aggregateSentiment: 31,
     },
     {
       id: 5,
-      text: "Jonathan",
+      text: "Jonathan : " + sentiment,
       topic: "clinton",
-      sentiment: sentiment,
-      aggregateSentiment: 0
+      sentiment: 1,
+      aggregateSentiment: 32
     },
     {
       id: 6,
       text: "Adam",
-      topic: "clinton",
-      sentiment: sentiment,
-      aggregateSentiment: 1
+      topic: "clinton" + sentiment,
+      sentiment: -1,
+      aggregateSentiment: 26
     },
     {
       id: 7,
-      text: "Barbara",
+      text: "Barbara : " +sentiment,
       topic: "clinton",
-      sentiment: sentiment,
-      aggregateSentiment: 1
+      sentiment: -1,
+      aggregateSentiment: 27,
     },
     {
       id: 8,
-      text: "Bob",
+      text: "Bob : "+ sentiment,
       topic: "trump",
-      sentiment: sentiment,
-      aggregateSentiment: -1
+      sentiment:1 ,
+      aggregateSentiment: 22
     }
   ];
 };

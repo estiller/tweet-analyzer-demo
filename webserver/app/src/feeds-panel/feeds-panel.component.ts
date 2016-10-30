@@ -1,4 +1,4 @@
-import {IFeed ,ISocket} from '../common/common'
+import { IFeed, ISocket } from '../common/common'
 
 export class FeedsPanelComponent {
     public feeds: IFeed[];
@@ -14,6 +14,8 @@ export class FeedsPanelComponent {
             data: this.count,
             options: {
                 yAxisMinimumInterval: 1,
+                scaleStartValue: 0,
+                scaleBeginAtZero : true
             }
         };
         this.feeds = [];
@@ -22,7 +24,7 @@ export class FeedsPanelComponent {
             if (this.config.topic === feed.topic) {
                 this.feeds.unshift(feed);
                 // console.log("feed added");
-                ++this.chart.data[feed.aggregateSentiment + 1];
+                this.chart.data[feed.sentiment + 1] = feed.aggregateSentiment;
             }
         });
     }
