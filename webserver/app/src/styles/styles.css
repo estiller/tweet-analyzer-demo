@@ -52,11 +52,13 @@ header h1 {
   width: 100%;
   border: 1px solid #ccc;
   overflow: visible;
-  padding: 5px;
+  padding: 10px;
+  animation: fadein 1s linear;
 }
 .feed-wrapper .feeds-row .feeds-panel .feed .text {
   font-size: 18px;
   text-align: left;
+  font-style: italic;
 }
 .feed-wrapper .feeds-row .feeds-panel .feed .sentment {
   font-size: 14px;
@@ -71,6 +73,19 @@ header h1 {
 .feed-wrapper .topic-row {
   height: 200px;
   overflow: hidden;
+}
+@keyframes fadein {
+  0% {
+    height: 0;
+    opacity: 0;
+  }
+  25% {
+    height: auto;
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 @media (max-width: 992px) {
   .feed-wrapper .feed-image {

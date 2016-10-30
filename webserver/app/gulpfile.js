@@ -3,7 +3,21 @@ var ts = require('gulp-typescript');
 var less = require('gulp-less');
 var path = require('path');
 var tsProject = ts.createProject("tsconfig.json");
+var webpack = require('gulp-webpack');
 
+
+gulp.task('default',['compile','less'], function() {
+  return gulp.src('src/**/*.js')
+    .pipe(webpack({
+      entry: {
+        app: './src/app.js',
+      },
+      output: {
+        filename: 'app.js',
+      },
+    }))
+    .pipe(gulp.dest('src/'));
+});
 
 gulp.task('less', function () {
     return gulp.src('src/styles/**/*.less')
@@ -15,8 +29,10 @@ gulp.task('less', function () {
 
 
 gulp.task("compile", function () {
-    return tsProject.src()
-        .pipe(tsProject())
+    return gulp.src('src/**/*.ts')
+        .pipe(ts({
+
+        }))
         .js.pipe(gulp.dest('src'));
 });
 

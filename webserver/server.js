@@ -1,6 +1,7 @@
 var express = require('express');
-async = require('async');
 var yargs = require('yargs').argv;
+// var feeds = require('./feeds.js')
+
 
 app = express(),
   server = require('http').Server(app),
@@ -22,83 +23,62 @@ io.sockets.on('connection', function (socket) {
 
 
 
-// async.retry(
-//   { times: 10, interval: 750 },
-//   function (callback) {
-//     pg.connect('postgres://postgres@db/postgres', function (err, client, done) {
-//       if (err) {
-//         console.error("Waiting for db");
-//       }
-//       callback(err, client);
-//     });
-//   },
-//   function (err, client) {
-//     if (err) {
-//       return console.err("Giving up");
-//     }
-//     console.log("Connected to db");
-//     getFeed(client);
-//   }
-// );
-
-
-
 function createFeeds() {
   var sentiment = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam accumsan diam vel dui posuere tristique. Curabitur et augue dolor. Praesent ut neque vel ex aliquam tristique. ";
 
   return [
     {
       id: 1,
-      text: "text",
+      text: "Amy",
       topic: "trump",
       sentiment: sentiment,
       aggregateSentiment: -1
     },
     {
       id: 2,
-      text: "text",
+      text: "Scott",
       topic: "trump",
       sentiment: sentiment,
       aggregateSentiment: 0
     },
     {
       id: 3,
-      text: "text",
+      text: "Paul",
       topic: "trump",
       sentiment: sentiment,
       aggregateSentiment: 1
     },
     {
       id: 4,
-      text: "text",
+      text: "Andrew",
       topic: "clinton",
       sentiment: sentiment,
       aggregateSentiment: -1
     },
     {
       id: 5,
-      text: "text",
+      text: "Jonathan",
       topic: "clinton",
       sentiment: sentiment,
       aggregateSentiment: 0
     },
     {
       id: 6,
-      text: "text",
+      text: "Adam",
       topic: "clinton",
       sentiment: sentiment,
       aggregateSentiment: 1
     },
     {
       id: 7,
-      text: "text",
+      text: "Barbara",
       topic: "clinton",
       sentiment: sentiment,
       aggregateSentiment: 1
     },
     {
       id: 8,
-      text: "text",
+      text: "Bob",
       topic: "trump",
       sentiment: sentiment,
       aggregateSentiment: -1

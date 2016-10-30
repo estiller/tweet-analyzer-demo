@@ -1,6 +1,7 @@
 {
     "files": [
-        "src/app.ts"
+        "src/app.ts",
+        "src/appc"
     ],
     "compilerOptions": {
         "target": "es5"
