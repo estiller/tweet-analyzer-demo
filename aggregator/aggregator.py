@@ -1,5 +1,6 @@
 import argparse
 import json
+import logging
 import pika
 import re
 import time
@@ -19,7 +20,7 @@ while connection == None:
     try:
         connection = pika.BlockingConnection(pika.ConnectionParameters(args.rabbitmq_host))
     except pika.exceptions.ConnectionClosed:
-        print("RabbitMQ connection still closed. Retrying.")
+        logging.warn("RabbitMQ connection still closed. Retrying.")
         time.sleep(5)
 channel = connection.channel()
 channel.queue_declare(queue='analyzed')

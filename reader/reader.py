@@ -1,9 +1,10 @@
 import argparse
 import configparser
 import json
+import logging
 import pika
-import sys
 import time
+import traceback
 from twython import TwythonStreamer
 
 class TwitterConfiguration:
@@ -32,15 +33,16 @@ class MyStreamer(TwythonStreamer):
             serialized_data = json.dumps(output_data)
             self.pika_channel.basic_publish('', 'tweets', serialized_data)
             print(serialized_data)
+        return True
 
     def on_error(self, status_code, data):
-        print(status_code)
+         print(status_code)
 
     def on_timeout(self):
-        print("Twitter Timeout")
+         print("Twitter Timeout")
 
     def disconnect(self):
-        print("Twitter Disconnect")
+         print("Twitter Disconnect")
 
 parser = argparse.ArgumentParser(description='Read tweets and put them into a queue.')
 parser.add_argument('--rabbitmq', '-r', dest='rabbitmq_host', default='localhost',
@@ -52,7 +54,7 @@ while connection == None:
     try:
         connection = pika.BlockingConnection(pika.ConnectionParameters(args.rabbitmq_host))
     except pika.exceptions.ConnectionClosed:
-        print("RabbitMQ connection still closed. Retrying.")
+        logging.warn("RabbitMQ connection still closed. Retrying.")
         time.sleep(5)
 channel = connection.channel()
 channel.queue_declare(queue='tweets')
@@ -63,4 +65,5 @@ while True:
         stream = MyStreamer(configuration, channel)
         stream.statuses.filter(track='trump,clinton')
     except:
-        print("Unexpected error: ", sys.exc_info()[0])
+        print("Unexpected error: ")        
+        traceback.print_exc()
