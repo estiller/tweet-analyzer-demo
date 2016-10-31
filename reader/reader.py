@@ -36,6 +36,11 @@ class MyStreamer(TwythonStreamer):
     def on_error(self, status_code, data):
         print(status_code)
 
+    def on_timeout(self):
+        print("Twitter Timeout")
+
+    def disconnect(self):
+        print("Twitter Disconnect")
 
 parser = argparse.ArgumentParser(description='Read tweets and put them into a queue.')
 parser.add_argument('--rabbitmq', '-r', dest='rabbitmq_host', default='localhost',
