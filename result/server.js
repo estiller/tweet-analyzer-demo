@@ -31,23 +31,25 @@ async.retry({ times: 5, interval: 1000 }, function (callback) {
     console.log('amqp is up');
     callback('', amqp);
   }
-},
+},//TODO  - fix this setTimeout workaround
   function (err, result) {
-    result.connect(rabbitMQServer, function (err, conn) {
-      console.log('connected to rabbitmq');
-      conn.createChannel(function (err, ch) {
-        ch.assertExchange(rabbitMQ, 'fanout', { durable: false });
-        ch.assertQueue('', { exclusive: true }, function (err, q) {
-          console.log(" [*] Waiting for messages in %s. To exit press CTRL+C", q.queue);
-          ch.bindQueue(q.queue, rabbitMQ, '');
+    setTimeout(function () {
+      result.connect(rabbitMQServer, function (err, conn) {
+        console.log('connected to rabbitmq');
+        conn.createChannel(function (err, ch) {
+          ch.assertExchange(rabbitMQ, 'fanout', { durable: false });
+          ch.assertQueue('', { exclusive: true }, function (err, q) {
+            console.log(" [*] Waiting for messages in %s. To exit press CTRL+C", q.queue);
+            ch.bindQueue(q.queue, rabbitMQ, '');
 
-          ch.consume(q.queue, function (feed) {
-            io.sockets.emit("newFeed", JSON.parse(feed.content.toString()));
-            console.log("new feed added: " + JSON.stringify(feed.content.toString()));
-          }, { noAck: true });
+            ch.consume(q.queue, function (feed) {
+              io.sockets.emit("newFeed", JSON.parse(feed.content.toString()));
+              console.log("new feed added: " + JSON.stringify(feed.content.toString()));
+            }, { noAck: true });
+          });
         });
       });
-    });
+    }, 5000);
   }
 );
 
