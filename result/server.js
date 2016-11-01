@@ -4,6 +4,7 @@ var os = require("os");
 var hostname = os.hostname();
 var amqp = require('amqplib/callback_api');
 var config = require('./server.config');
+var async = require('async');
 
 app = express();
 server = require('http').Server(app);
@@ -23,23 +24,42 @@ io.sockets.on('connection', function (socket) {
   })
 });
 
+// async.retry({ times: 5, interval: 1000 }, function () {
+//   console.log('get rabbitmq instance');
+//   return amqp;
+// }, function (amqp) {
+//   amqp.connect(rabbitMQServer, function (err, conn) {
+//     console.log('connected to rabbitmq');
+//     conn.createChannel(function (err, ch) {
+//       ch.assertExchange(rabbitMQ, 'fanout', { durable: false });
+//       ch.assertQueue('', { exclusive: true }, function (err, q) {
+//         console.log(" [*] Waiting for messages in %s. To exit press CTRL+C", q.queue);
+//         ch.bindQueue(q.queue, rabbitMQ, '');
 
+//         ch.consume(q.queue, function (feed) {
+//           io.sockets.emit("newFeed", JSON.parse(feed.content.toString()));
+//           console.log("new feed added: " + JSON.stringify(feed.content.toString()));
+//         }, { noAck: true });  
+//       });
+//     });
+//   });
+// });
 amqp.connect(rabbitMQServer, function (err, conn) {
-  conn.createChannel(function (err, ch) {
+    console.log('connected to rabbitmq');
+    conn.createChannel(function (err, ch) {
+      ch.assertExchange(rabbitMQ, 'fanout', { durable: false });
+      ch.assertQueue('', { exclusive: true }, function (err, q) {
+        console.log(" [*] Waiting for messages in %s. To exit press CTRL+C", q.queue);
+        ch.bindQueue(q.queue, rabbitMQ, '');
 
-    ch.assertExchange(rabbitMQ, 'fanout', { durable: false });
-
-    ch.assertQueue('', { exclusive: true }, function (err, q) {
-      console.log(" [*] Waiting for messages in %s. To exit press CTRL+C", q.queue);
-      ch.bindQueue(q.queue, rabbitMQ, '');
-
-      ch.consume(q.queue, function (feed) {
-        io.sockets.emit("newFeed", JSON.parse(feed.content.toString()));
-        console.log("new feed added: " + JSON.stringify(feed.content.toString()));
-      }, { noAck: true });
+        ch.consume(q.queue, function (feed) {
+          io.sockets.emit("newFeed", JSON.parse(feed.content.toString()));
+          console.log("new feed added: " + JSON.stringify(feed.content.toString()));
+        }, { noAck: true });  
+      });
     });
   });
-});
+
 
 function getTopics() {
   return [
