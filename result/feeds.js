@@ -9,17 +9,18 @@ exports.feeds = [
     },
     {
         id: 2,
-        text: "Scott : " + sentiment,
-        topic: "trump",
-        sentiment: -1,
-        aggregateSentiment: 31
+        text: "Wendi :" + sentiment,
+        topic: "both",
+        sentiment: 0,
+        aggregateSentiment: 26
     },
     {
         id: 3,
-        text: "Paul : " + sentiment,
-        topic: "trump",
-        sentiment: 1,
-        aggregateSentiment: 21
+        text: "Adam : " + sentiment,
+        topic: "clinton",
+        sentiment: -1,
+        aggregateSentiment: 26
+
     },
     {
         id: 4,
@@ -37,10 +38,11 @@ exports.feeds = [
     },
     {
         id: 6,
-        text: "Adam",
-        topic: "clinton" + sentiment,
-        sentiment: -1,
-        aggregateSentiment: 26
+        text: "Paul : " + sentiment,
+        topic: "trump",
+        sentiment: 1,
+        aggregateSentiment: 21
+
     },
     {
         id: 7,
@@ -52,7 +54,28 @@ exports.feeds = [
     {
         id: 8,
         text: "Bob : " + sentiment,
+        topic: "both",
+        sentiment: 0,
+        aggregateSentiment: 5
+    },
+    {
+        id: 9,
+        text: "Scott : " + sentiment,
         topic: "trump",
+        sentiment: -1,
+        aggregateSentiment: 31
+    },
+    {
+        id: 10,
+        text: "Barbara : " + sentiment,
+        topic: "both",
+        sentiment: -1,
+        aggregateSentiment: 27,
+    },
+    {
+        id: 11,
+        text: "Bob : " + sentiment,
+        topic: "both",
         sentiment: 1,
         aggregateSentiment: 22
     }
