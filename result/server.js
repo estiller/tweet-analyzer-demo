@@ -49,7 +49,7 @@ async.retry({ times: 5, interval: 1000 }, function (callback) {
           });
         });
       });
-    }, 5000);
+    }, 4000);
   }
 );
 
@@ -60,10 +60,6 @@ function getTopics() {
     {
       topic: 'trump',
       img: 'http://static4.businessinsider.com/image/56c640526e97c625048b822a-480/donald-trump.jpg',
-    },
-    {
-      topic: 'both',
-      img: 'http://www.ydop.com/wp-content/uploads/2016/07/trump-vs-clinton.jpg',
     },
     {
       topic: 'clinton',

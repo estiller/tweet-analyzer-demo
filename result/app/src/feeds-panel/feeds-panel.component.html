@@ -17,6 +17,7 @@
 				<li ng-repeat="feed in $ctrl.feeds" class="feed">
 					<div class="row">
 						<div class="col-xs-12 text">
+							<span class="glyphicon {{::feed.sentimentIcon}}"></span>
 							<span>{{feed.text}}</span>
 						</div>
 					</div>

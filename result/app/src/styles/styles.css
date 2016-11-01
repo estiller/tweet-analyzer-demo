@@ -21,8 +21,17 @@ header h1 {
   background-color: #555;
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
 }
-.server-host {
+.abst-box {
   position: absolute;
+  top: -30px;
+}
+.logo {
+  width: 250px;
+}
+.server-host {
+  left: 40px;
+  position: absolute;
+  bottom: 0;
 }
 .feed-wrapper {
   font-size: 20px;
@@ -59,16 +68,22 @@ header h1 {
   border: 1px solid #ccc;
   overflow: visible;
   padding: 10px;
-  animation: fadein 1s linear;
+  animation: fadein 0.5s linear;
 }
 .feed-wrapper .feeds-row .feeds-panel .feed .text {
-  font-size: 18px;
+  font-size: 14px;
   text-align: left;
   font-style: italic;
 }
 .feed-wrapper .feeds-row .feeds-panel .feed .sentment {
-  font-size: 14px;
+  font-size: 11px;
   text-align: left;
+}
+.feed-wrapper .feeds-row .feeds-panel .feed .glyphicon-ok {
+  color: lime;
+}
+.feed-wrapper .feeds-row .feeds-panel .feed .glyphicon-remove {
+  color: red;
 }
 .feed-wrapper .feeds-row .feeds-panel:first-child {
   border-top: none;
@@ -102,10 +117,10 @@ header h1 {
     width: 100%;
   }
   .feed-wrapper .feeds-row .feeds-panel .feed .text {
-    font-size: 14px;
+    font-size: 18px;
   }
   .feed-wrapper .feeds-row .feeds-panel .feed .sentment {
-    font-size: 11px;
+    font-size: 14px;
   }
   .feed-wrapper .topic-row {
     height: 200px;
