@@ -12,4 +12,4 @@ ADD . /app
 
 EXPOSE 80
 
-CMD ["node", "server.js", "--port", "80"]
+CMD ["node", "server.js", "--port", "80", "--queue", "output", "--qserver", "amqp://rabbitmq"]
