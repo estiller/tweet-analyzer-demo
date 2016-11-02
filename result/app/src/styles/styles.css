@@ -21,17 +21,20 @@ header h1 {
   background-color: #555;
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
 }
-.abst-box {
+.app-component .abst-box {
   position: absolute;
   top: -30px;
 }
-.logo {
+.app-component .logo {
   width: 250px;
 }
-.server-host {
+.app-component .server-host {
   left: 40px;
   position: absolute;
   bottom: 0;
+}
+.app-component .row {
+  margin-top: 10px;
 }
 .feed-wrapper {
   font-size: 20px;
@@ -68,7 +71,6 @@ header h1 {
   border: 1px solid #ccc;
   overflow: visible;
   padding: 10px;
-  animation: fadein 0.5s linear;
 }
 .feed-wrapper .feeds-row .feeds-panel .feed .text {
   font-size: 14px;

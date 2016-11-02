@@ -28,19 +28,22 @@
         -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
     }
     
-    .abst-box {
-        position: absolute;
-        top: -30px;
-    }
-    
-    .logo {
-        width: 250px;
-    }
-    
-    .server-host {
-        left: 40px;
-        position: absolute;
-        bottom: 20px;
+    .app-component {
+        .abst-box {
+            position: absolute;
+            top: -30px;
+        }
+        .logo {
+            width: 250px;
+        }
+        .server-host {
+            left: 40px;
+            position: absolute;
+            bottom: 0;
+        }
+        .row{
+            margin-top:10px;
+        }
     }
     
     .feed-wrapper {
@@ -80,7 +83,7 @@
                     border: @border;
                     overflow: visible;
                     padding: 10px;
-                    animation: fadein 0.5s linear;
+                    // animation: fadein 0.5s linear;
                     .text {
                         font-size: 14px;
                         text-align: left;
