@@ -2,7 +2,7 @@ version: "2"
 
 services:
   reader:
-    build: ./reader
+    image: stiller/tweeteranalyzerdemo_reader:v1
 
   rabbitmq:
     image: rabbitmq:3.6.5-management
@@ -10,15 +10,15 @@ services:
      - "8080:15672"
 
   analyzer:
-    build: ./analyzer
+    image: stiller/tweeteranalyzerdemo_analyzer:v1
 
   aggregator:
-    build: ./aggregator
+    image: stiller/tweeteranalyzerdemo_aggregator:v1
 
   redis:
     image: redis:3.2.4-alpine
 
   result:
-    build: ./result
+    image: stiller/tweeteranalyzerdemo_result:v1
     ports: 
-      - "4000:80"
+      - "80:80"
