@@ -49,7 +49,7 @@ async.retry({ times: 5, interval: 1000 }, function (callback) {
           });
         });
       });
-    }, 4000);
+    }, 5000);
   }
 );
 

@@ -30,7 +30,7 @@ namespace Analyzer
 
             Observable.FromEventPattern<TweetRecievedEventArgs>(handler => tweetConsumer.TweetRecieved += handler, handler => tweetConsumer.TweetRecieved -= handler)
                 .Select(pattern => pattern.EventArgs)
-                .Buffer(TimeSpan.FromSeconds(5), 1000)
+                .Buffer(TimeSpan.FromSeconds(0.5), 1000)
                 .Select(recievedTweets => new { RecievedTweets = recievedTweets, Analyzed = tweetAnalyzer.AnalyzeTweets(recievedTweets.Select(recievedArgs => recievedArgs.Tweet))})
                 .ForEachAsync(items => {
                     tweetPublisher.PublishTweets(items.Analyzed);
