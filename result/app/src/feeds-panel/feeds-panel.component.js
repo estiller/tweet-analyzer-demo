@@ -37,7 +37,8 @@ var FeedsPanelComponent = (function () {
             if (_this.config.topic === feed.topic) {
                 feed['sentimentIcon'] = _this.sentimentIcons[feed.sentiment];
                 _this.feeds.unshift(feed);
-                _this.chart.data[feed.sentiment + 1] = feed.aggregateSentiment;
+                var sentiment = parseInt(feed.sentiment) * -1;
+                _this.chart.data[sentiment + 1] = feed.aggregateSentiment;
                 if (_this.feeds.length > 100) {
                     _this.feeds = _this.feeds.splice(0, _this.feeds.length / 2);
                 }
@@ -49,21 +50,14 @@ var FeedsPanelComponent = (function () {
     }
     //TODO - find a nicer algorithm for this 
     FeedsPanelComponent.prototype.calcNewMax = function (n) {
-        var newMax = n;
-        if (newMax < 250) {
-            newMax = 250;
+        var numAsString = n.toString();
+        var newMax = 1;
+        for (var i = 0; i < numAsString.length; ++i) {
+            newMax *= 10;
         }
-        else if (newMax < 500) {
-            newMax = 500;
-        }
-        else if (newMax < 1000) {
-            newMax *= 1.5;
-        }
-        else {
-            newMax *= 1.1;
-        }
-        return Math.floor(newMax);
+        return newMax;
     };
+    ;
     return FeedsPanelComponent;
 }());
 exports.FeedsPanelComponent = FeedsPanelComponent;

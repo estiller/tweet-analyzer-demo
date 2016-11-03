@@ -48,7 +48,8 @@ export class FeedsPanelComponent {
             if (this.config.topic === feed.topic) {
                 feed['sentimentIcon'] = this.sentimentIcons[feed.sentiment];
                 this.feeds.unshift(feed);
-                this.chart.data[feed.sentiment + 1] = feed.aggregateSentiment;
+                var sentiment = parseInt(feed.sentiment) * -1;
+                this.chart.data[sentiment + 1] = feed.aggregateSentiment;
                 if (this.feeds.length > 100) {
                     this.feeds = this.feeds.splice(0, this.feeds.length / 2);
                 }
@@ -61,19 +62,11 @@ export class FeedsPanelComponent {
 
     //TODO - find a nicer algorithm for this 
     private calcNewMax(n: number): number {
-        let newMax = n;
-        if (newMax < 250) {
-            newMax = 250;
+        var numAsString = n.toString();
+        var newMax = 1;
+        for (var i = 0; i < numAsString.length; ++i) {
+            newMax *= 10;
         }
-        else if (newMax < 500) {
-            newMax = 500;
-        }
-        else if (newMax < 1000) {
-            newMax *= 1.5;
-        }
-        else {
-            newMax *= 1.1;
-        }
-        return Math.floor(newMax);
-    }
+        return newMax;
+    };
 }
