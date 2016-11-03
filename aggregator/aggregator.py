@@ -32,19 +32,23 @@ def callback(ch, method, properties, body):
     bodyString = body.decode('utf-8')
     print("Received '{}'".format(bodyString))
     data = json.loads(bodyString)
-    for topic in topics:
-        if re.search(topic, bodyString, re.IGNORECASE):
-            counter = redis.incr("{}-{}".format(topic, data['sentiment']))
-            output = {
-                'id': data['id'],
-                'text': data['text'],
-                'topic': topic,
-                'sentiment': data['sentiment'],
-                'aggregateSentiment': counter
-            }
-            outputString = json.dumps(output)
-            channel.basic_publish('output', '', outputString)
-            print("Output '{}'".format(outputString))
+    foundTopics = []
+    for t in topics:
+        if re.search(t, bodyString, re.IGNORECASE):
+            foundTopics.append(t)
+    if len(foundTopics) > 0:
+        topicString = ','.join(foundTopics)
+        counter = redis.incr("{}-{}".format(topicString, data['sentiment']))
+        output = {
+            'id': data['id'],
+            'text': data['text'],
+            'topic': topicString,
+            'sentiment': data['sentiment'],
+            'aggregateSentiment': counter
+        }
+        outputString = json.dumps(output)
+        channel.basic_publish('output', '', outputString)
+        print("Output '{}'".format(outputString))
     channel.basic_ack(method.delivery_tag)
 
 channel.basic_consume(callback, queue='analyzed')

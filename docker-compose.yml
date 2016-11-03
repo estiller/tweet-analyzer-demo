@@ -13,12 +13,12 @@ services:
     image: stiller/tweeteranalyzerdemo_analyzer:v1
 
   aggregator:
-    image: stiller/tweeteranalyzerdemo_aggregator:v1
+    image: stiller/tweeteranalyzerdemo_aggregator:v2
 
   redis:
     image: redis:3.2.4-alpine
 
   result:
-    image: stiller/tweeteranalyzerdemo_result:v1
+    image: stiller/tweeteranalyzerdemo_result:v2
     ports: 
       - "80:80"

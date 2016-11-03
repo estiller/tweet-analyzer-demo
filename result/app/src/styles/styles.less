@@ -51,7 +51,7 @@
         min-height: 700px;
         @image-dims : 100px;
         .feed-image {
-            width: @image-dims;
+            width:  @image-dims;
             height: @image-dims;
             border-radius: 25%;
         }
@@ -83,14 +83,14 @@
                     border: @border;
                     overflow: visible;
                     padding: 10px;
-                    // animation: fadein 0.5s linear;
+                    // animation: fadein 1s linear;
                     .text {
-                        font-size: 14px;
+                        font-size: 18px;
                         text-align: left;
                         font-style: italic;
                     }
                     .sentment {
-                        font-size: 11px;
+                        font-size: 14px;
                         text-align: left;
                     }
                     .glyphicon-ok {
@@ -99,6 +99,12 @@
                     .glyphicon-remove {
                         color: red;
                     }
+                }
+                &:first-child {
+                    border-top: none;
+                }
+                &:last-child {
+                    border-bottom: none;
                 }
                 &:first-child {
                     border-top: none;
@@ -130,7 +136,7 @@
     
     @media(min-width: 992px) {
         .feed-wrapper {
-            @image-dims : 100px;
+            @image-dims :100px;
             .feed-image {
                 width: @image-dims;
                 height: @image-dims;
@@ -142,10 +148,10 @@
                 .feeds-panel {
                     .feed {
                         .text {
-                            font-size: 18px;
+                            font-size: 14px;
                         }
                         .sentment {
-                            font-size: 14px;
+                            font-size: 11px;
                         }
                     }
                 }

@@ -73,12 +73,12 @@ header h1 {
   padding: 10px;
 }
 .feed-wrapper .feeds-row .feeds-panel .feed .text {
-  font-size: 14px;
+  font-size: 18px;
   text-align: left;
   font-style: italic;
 }
 .feed-wrapper .feeds-row .feeds-panel .feed .sentment {
-  font-size: 11px;
+  font-size: 14px;
   text-align: left;
 }
 .feed-wrapper .feeds-row .feeds-panel .feed .glyphicon-ok {
@@ -86,6 +86,12 @@ header h1 {
 }
 .feed-wrapper .feeds-row .feeds-panel .feed .glyphicon-remove {
   color: red;
+}
+.feed-wrapper .feeds-row .feeds-panel:first-child {
+  border-top: none;
+}
+.feed-wrapper .feeds-row .feeds-panel:last-child {
+  border-bottom: none;
 }
 .feed-wrapper .feeds-row .feeds-panel:first-child {
   border-top: none;
@@ -119,10 +125,10 @@ header h1 {
     width: 100%;
   }
   .feed-wrapper .feeds-row .feeds-panel .feed .text {
-    font-size: 18px;
+    font-size: 14px;
   }
   .feed-wrapper .feeds-row .feeds-panel .feed .sentment {
-    font-size: 14px;
+    font-size: 11px;
   }
   .feed-wrapper .topic-row {
     height: 200px;
