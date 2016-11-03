@@ -3,8 +3,6 @@ version: "2"
 services:
   reader:
     build: ./reader
-    links: 
-      - rabbitmq
 
   rabbitmq:
     image: rabbitmq:3.6.5-management
@@ -13,14 +11,9 @@ services:
 
   analyzer:
     build: ./analyzer
-    links:
-      - rabbitmq
 
   aggregator:
     build: ./aggregator
-    links: 
-      - rabbitmq
-      - redis
 
   redis:
     image: redis:3.2.4-alpine
@@ -29,5 +22,3 @@ services:
     build: ./result
     ports: 
       - "4000:80"
-    links:
-      - rabbitmq
