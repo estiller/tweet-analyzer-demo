@@ -226,14 +226,10 @@
 	            }
 	        });
 	    }
-	    //TODO - find a nicer algorithm for this 
 	    FeedsPanelComponent.prototype.calcNewMax = function (n) {
 	        var numAsString = n.toString();
-	        var newMax = 1;
-	        for (var i = 0; i < numAsString.length; ++i) {
-	            newMax *= 10;
-	        }
-	        return newMax;
+	        var scale = Math.pow(10, numAsString.length - 1);
+	        return Math.ceil((n / scale)) * scale;
 	    };
 	    ;
 	    return FeedsPanelComponent;
