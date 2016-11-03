@@ -48,7 +48,7 @@
 	"use strict";
 	var app_component_1 = __webpack_require__(1);
 	var content_panel_component_1 = __webpack_require__(2);
-	var feeds_panel_component_1 = __webpack_require__(3);
+	var feeds_panel_component_1 = __webpack_require__(4);
 	var appName = "TweetAnalyzer";
 	var app = angular.module(appName, ['chart.js', 'btford.socket-io']);
 	app.factory('socket', function (socketFactory) {
@@ -66,7 +66,8 @@
 	    templateUrl: 'src/feeds-panel/feeds-panel.component.html',
 	    controller: feeds_panel_component_1.FeedsPanelComponent,
 	    bindings: {
-	        config: "<"
+	        config: "<",
+	        yEvent: "="
 	    }
 	});
 
@@ -95,17 +96,19 @@
 
 /***/ },
 /* 2 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
+	var IEvent_1 = __webpack_require__(3);
 	var ContentPanelComponent = (function () {
-	    function ContentPanelComponent($http) {
+	    function ContentPanelComponent($http, socket) {
 	        var _this = this;
 	        this.$http = $http;
+	        this.socket = socket;
 	        this.$http.get('/topics').then(function (resolve) {
 	            _this.configs = resolve.data;
-	            var numOfColumns = _this.configs && _this.configs.length;
 	        });
+	        this.onYMaxNumberChange = new IEvent_1.Event();
 	    }
 	    return ContentPanelComponent;
 	}());
@@ -118,31 +121,127 @@
 /***/ function(module, exports) {
 
 	"use strict";
+	/// <reference path="../../typings/index.d.ts" />
+	var CancelEventArgs = (function () {
+	    function CancelEventArgs() {
+	        this.cancel = false;
+	    }
+	    return CancelEventArgs;
+	}());
+	exports.CancelEventArgs = CancelEventArgs;
+	var EventArgs = (function () {
+	    function EventArgs(data) {
+	        this.data = data;
+	    }
+	    return EventArgs;
+	}());
+	exports.EventArgs = EventArgs;
+	var Event = (function () {
+	    function Event() {
+	        this.handlers = [];
+	    }
+	    Event.prototype.add = function (handler) {
+	        this.handlers.push(handler);
+	    };
+	    Event.prototype.remove = function (handler) {
+	        var index = this.handlers.indexOf(handler);
+	        if (index >= 0) {
+	            this.handlers.splice(index, 1);
+	        }
+	    };
+	    Event.prototype.fire = function (args) {
+	        this.handlers.forEach(function (h) { return h(args); });
+	    };
+	    return Event;
+	}());
+	exports.Event = Event;
+	var AngularHelper = (function () {
+	    function AngularHelper() {
+	    }
+	    AngularHelper.safeApply = function (scope, action) {
+	        var phase = scope.$root.$$phase;
+	        if (phase == '$apply' || phase == '$digest') {
+	            action();
+	        }
+	        else {
+	            scope.$apply(action);
+	        }
+	    };
+	    return AngularHelper;
+	}());
+	exports.AngularHelper = AngularHelper;
+
+
+/***/ },
+/* 4 */
+/***/ function(module, exports) {
+
+	"use strict";
 	var FeedsPanelComponent = (function () {
-	    function FeedsPanelComponent(socket) {
+	    function FeedsPanelComponent(socket, $rootScope) {
 	        var _this = this;
 	        this.socket = socket;
-	        var labelsList = ["Negative", "Neutral", "Positive"];
+	        this.$rootScope = $rootScope;
+	        this.sentimentIcons = {
+	            '-1': 'glyphicon-remove',
+	            '0': 'glyphicon-user',
+	            '1': 'glyphicon-ok'
+	        };
+	        this.maxValue = 0;
+	        var labelsList = ["Positive", "Neutral", "Negative"];
 	        this.count = [0, 0, 0];
 	        this.chart = {
 	            labels: labelsList,
 	            data: this.count,
 	            options: {
-	                yAxisMinimumInterval: 1,
-	                scaleStartValue: 0,
-	                scaleBeginAtZero: true
+	                scales: {
+	                    beginAtZero: true,
+	                    yAxes: [{
+	                            ticks: {
+	                                min: 0
+	                            }
+	                        }]
+	                }
 	            }
 	        };
+	        this.yEvent.add(function (args) {
+	            var newMax = _this.calcNewMax(args.n);
+	            _this.chart.options.scales.yAxes[0].ticks.max = newMax;
+	            _this.maxValue = newMax;
+	        });
 	        this.feeds = [];
 	        socket.connect();
 	        socket.on('newFeed', function (feed) {
 	            if (_this.config.topic === feed.topic) {
+	                feed['sentimentIcon'] = _this.sentimentIcons[feed.sentiment];
 	                _this.feeds.unshift(feed);
-	                // console.log("feed added");
 	                _this.chart.data[feed.sentiment + 1] = feed.aggregateSentiment;
+	                if (_this.feeds.length > 100) {
+	                    _this.feeds = _this.feeds.splice(0, _this.feeds.length / 2);
+	                }
+	                if (_this.maxValue < feed.aggregateSentiment) {
+	                    _this.yEvent.fire({ n: feed.aggregateSentiment });
+	                }
 	            }
 	        });
 	    }
+	    //TODO - find a nicer algorithm for this 
+	    FeedsPanelComponent.prototype.calcNewMax = function (n) {
+	        var newMax = n;
+	        if (newMax < 250) {
+	            newMax = 250;
+	        }
+	        else if (newMax < 500) {
+	            newMax = 500;
+	        }
+	        else if (newMax < 1000) {
+	            newMax *= 1.5;
+	        }
+	        else {
+	            newMax *= 1.1;
+	        }
+	        return Math.floor(newMax);
+	    };
 	    return FeedsPanelComponent;
 	}());
 	exports.FeedsPanelComponent = FeedsPanelComponent;

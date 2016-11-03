@@ -21,20 +21,35 @@ header h1 {
   background-color: #555;
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
 }
-.server-host {
+.app-component .abst-box {
   position: absolute;
+  top: -30px;
+}
+.app-component .logo {
+  width: 250px;
+}
+.app-component .server-host {
+  left: 40px;
+  position: absolute;
+  bottom: 0;
+}
+.app-component .row {
+  margin-top: 10px;
 }
 .feed-wrapper {
   font-size: 20px;
   min-height: 700px;
 }
 .feed-wrapper .feed-image {
-  width: 150px;
-  height: 150px;
-  border-radius: 15px;
+  width: 100px;
+  height: 100px;
+  border-radius: 25%;
+}
+.feed-wrapper .chart.chart-bar {
+  width: 100%;
 }
 .feed-wrapper .feed-chart {
-  max-height: 150px;
+  max-height: 100px;
   margin-top: 15px;
   margin-bottom: 15px;
 }
@@ -56,16 +71,21 @@ header h1 {
   border: 1px solid #ccc;
   overflow: visible;
   padding: 10px;
-  animation: fadein 1s linear;
 }
 .feed-wrapper .feeds-row .feeds-panel .feed .text {
-  font-size: 18px;
+  font-size: 14px;
   text-align: left;
   font-style: italic;
 }
 .feed-wrapper .feeds-row .feeds-panel .feed .sentment {
-  font-size: 14px;
+  font-size: 11px;
   text-align: left;
+}
+.feed-wrapper .feeds-row .feeds-panel .feed .glyphicon-ok {
+  color: lime;
+}
+.feed-wrapper .feeds-row .feeds-panel .feed .glyphicon-remove {
+  color: red;
 }
 .feed-wrapper .feeds-row .feeds-panel:first-child {
   border-top: none;
@@ -74,8 +94,8 @@ header h1 {
   border-bottom: none;
 }
 .feed-wrapper .topic-row {
-  height: 200px;
   overflow: hidden;
+  height: 200px;
 }
 @keyframes fadein {
   0% {
@@ -90,7 +110,7 @@ header h1 {
     opacity: 1;
   }
 }
-@media (max-width: 992px) {
+@media (min-width: 992px) {
   .feed-wrapper .feed-image {
     width: 100px;
     height: 100px;
@@ -99,12 +119,12 @@ header h1 {
     width: 100%;
   }
   .feed-wrapper .feeds-row .feeds-panel .feed .text {
-    font-size: 14px;
+    font-size: 18px;
   }
   .feed-wrapper .feeds-row .feeds-panel .feed .sentment {
-    font-size: 11px;
+    font-size: 14px;
   }
   .feed-wrapper .topic-row {
-    height: 140px;
+    height: 200px;
   }
 }

@@ -23,5 +23,6 @@ app.factory('socket', (socketFactory) => {
         controller: FeedsPanelComponent,
         bindings: {
             config: "<",
+            yEvent:"=",
         }
     }); 

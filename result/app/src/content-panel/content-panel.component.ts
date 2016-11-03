@@ -1,15 +1,18 @@
 /// <reference path="../../typings/index.d.ts" />
-import { IConfig } from '../common/common';
+import { IConfig, ISocket } from '../common/common';
+import { IEvent, Event } from '../common/IEvent'
+
 
 export class ContentPanelComponent {
     public configs: IConfig[];
-    constructor(private $http: ng.IHttpService) {
+    public onYMaxNumberChange: Event<{ n: number }>;
 
+    constructor(private $http: ng.IHttpService, private socket: ISocket) {
         this.$http.get('/topics').then(
             (resolve: { data: IConfig[] }) => {
                 this.configs = resolve.data;
-                let numOfColumns = this.configs && this.configs.length;
-            }
-        )
+            });
+            this.onYMaxNumberChange = new Event<{n:number}>();
+
     }
 };

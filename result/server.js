@@ -2,8 +2,10 @@ var express = require('express');
 var yargs = require('yargs').argv;
 var os = require("os");
 var hostname = os.hostname();
-var amqp = require('amqplib/callback_api');
 var config = require('./server.config');
+var async = require('async');
+var amqp = require('amqplib/callback_api');
+
 
 app = express();
 server = require('http').Server(app);
@@ -24,22 +26,34 @@ io.sockets.on('connection', function (socket) {
 });
 
 
-amqp.connect(rabbitMQServer, function (err, conn) {
-  conn.createChannel(function (err, ch) {
+async.retry({ times: 5, interval: 1000 }, function (callback) {
+  if (amqp) {
+    console.log('amqp is up');
+    callback('', amqp);
+  }
+},//TODO  - fix this setTimeout workaround
+  function (err, result) {
+    setTimeout(function () {
+      result.connect(rabbitMQServer, function (err, conn) {
+        console.log('connected to rabbitmq');
+        conn.createChannel(function (err, ch) {
+          ch.assertExchange(rabbitMQ, 'fanout', { durable: false });
+          ch.assertQueue('', { exclusive: true }, function (err, q) {
+            console.log(" [*] Waiting for messages in %s. To exit press CTRL+C", q.queue);
+            ch.bindQueue(q.queue, rabbitMQ, '');
 
-    ch.assertExchange(rabbitMQ, 'fanout', { durable: false });
+            ch.consume(q.queue, function (feed) {
+              io.sockets.emit("newFeed", JSON.parse(feed.content.toString()));
+              console.log("new feed added: " + JSON.stringify(feed.content.toString()));
+            }, { noAck: true });
+          });
+        });
+      });
+    }, 4000);
+  }
+);
 
-    ch.assertQueue('', { exclusive: true }, function (err, q) {
-      console.log(" [*] Waiting for messages in %s. To exit press CTRL+C", q.queue);
-      ch.bindQueue(q.queue, rabbitMQ, '');
 
-      ch.consume(q.queue, function (feed) {
-        io.sockets.emit("newFeed", JSON.parse(feed.content.toString()));
-        console.log("new feed added: " + JSON.stringify(feed.content.toString()));
-      }, { noAck: true });
-    });
-  });
-});
 
 function getTopics() {
   return [

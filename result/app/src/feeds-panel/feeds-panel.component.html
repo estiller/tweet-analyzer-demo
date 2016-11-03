@@ -5,8 +5,7 @@
 		</div>
 		<div class="col-xs-8">
 			<div class="bar-box">
-				<canvas id="bar" class="chart chart-bar" chart-data="$ctrl.chart.data" chart-labels="$ctrl.chart.labels" chart-options:
-					"$ctrl.chart.options">
+				<canvas id="bar" class="chart chart-bar" chart-data="$ctrl.chart.data" chart-labels="$ctrl.chart.labels" chart-options="$ctrl.chart.options">
 				</canvas>
 			</div>
 		</div>
@@ -17,6 +16,7 @@
 				<li ng-repeat="feed in $ctrl.feeds" class="feed">
 					<div class="row">
 						<div class="col-xs-12 text">
+							<span class="glyphicon {{::feed.sentimentIcon}}"></span>
 							<span>{{feed.text}}</span>
 						</div>
 					</div>
