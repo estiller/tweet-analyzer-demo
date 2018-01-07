@@ -3,6 +3,11 @@ version: "2"
 services:
   reader:
     build: ./reader
+    environment:
+      - TwitterConsumerKey
+      - TwitterConsumerSecret
+      - TwitterAccessToken
+      - TwitterAccessTokenSecret
 
   rabbitmq:
     image: rabbitmq:3.6.5-management
@@ -11,6 +16,8 @@ services:
 
   analyzer:
     build: ./analyzer
+    environment:
+      - TextAnalyticsApiKey
 
   aggregator:
     build: ./aggregator
