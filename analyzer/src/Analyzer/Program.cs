@@ -9,7 +9,7 @@ namespace Analyzer
     public static class Program
     {
         private const string RabbitMQHost = "rabbitmq";
-        private const string ApiKey = "apikey";
+        private const string ApiKey = "TextAnalyticsApiKey";
 
         private static readonly Dictionary<string, string> DefaultConfig = new Dictionary<string, string>
         {
@@ -20,7 +20,7 @@ namespace Analyzer
         {
             var configBuilder = new ConfigurationBuilder();
             configBuilder.AddInMemoryCollection(DefaultConfig);
-            configBuilder.AddJsonFile("secrets.json");
+            configBuilder.AddEnvironmentVariables();
             configBuilder.AddCommandLine(args);
             var configuration = configBuilder.Build();
 

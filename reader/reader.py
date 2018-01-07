@@ -1,7 +1,7 @@
 import argparse
-import configparser
 import json
 import logging
+import os
 import pika
 import time
 import traceback
@@ -9,14 +9,10 @@ from twython import TwythonStreamer
 
 class TwitterConfiguration:
     def __init__(self):
-        config_parser = configparser.ConfigParser()
-        config_parser.read('config.ini')
-        twitter_section = config_parser['Twitter']
-
-        self.consumer_key = twitter_section['ConsumerKey']
-        self.consumer_secret = twitter_section['ConsumerSecret']
-        self.access_token = twitter_section['AccessToken']
-        self.access_token_secret = twitter_section['AccessTokenSecret']
+        self.consumer_key = os.environ['TwitterConsumerKey']
+        self.consumer_secret = os.environ['TwitterConsumerSecret']
+        self.access_token = os.environ['TwitterAccessToken']
+        self.access_token_secret = os.environ['TwitterAccessTokenSecret']
 
 
 class MyStreamer(TwythonStreamer):
@@ -55,6 +51,7 @@ while connection == None:
         connection = pika.BlockingConnection(pika.ConnectionParameters(args.rabbitmq_host))
     except pika.exceptions.ConnectionClosed:
         logging.warn("RabbitMQ connection still closed. Retrying.")
+        connection = None
         time.sleep(5)
 channel = connection.channel()
 channel.queue_declare(queue='tweets')
