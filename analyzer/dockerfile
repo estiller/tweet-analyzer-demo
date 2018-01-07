@@ -1,11 +1,11 @@
-FROM microsoft/dotnet:1.0.0-preview2-sdk
+FROM microsoft/dotnet:1-sdk
 
 WORKDIR /app
 
 ADD src/ /app/src/
 
-RUN dotnet restore -v minimal src/ \
-    && dotnet publish -c Release -o /app src/Analyzer/ \
+RUN dotnet restore -v minimal src/Analyzer/Analyzer.csproj \
+    && dotnet publish -c Release -o /app src/Analyzer/Analyzer.csproj \
     && rm -rf src/ $HOME/.nuget/
 
 CMD ["dotnet", "Analyzer.dll", "--rabbitmq", "rabbitmq"]

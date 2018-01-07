@@ -20,7 +20,7 @@ namespace Analyzer
             {
                 _httpClient = new HttpClient
                 {
-                    BaseAddress = new Uri("https://westus.api.cognitive.microsoft.com/text/analytics/v2.0/sentiment"),
+                    BaseAddress = new Uri("https://westeurope.api.cognitive.microsoft.com/text/analytics/v2.0/sentiment"),
                 };
                 _httpClient.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", apiKey);
                 _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
