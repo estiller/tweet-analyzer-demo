@@ -3,6 +3,11 @@ version: "2"
 services:
   reader:
     image: stiller/tweeteranalyzerdemo_reader:v1
+    environment:
+      - TwitterConsumerKey
+      - TwitterConsumerSecret
+      - TwitterAccessToken
+      - TwitterAccessTokenSecret
 
   rabbitmq:
     image: rabbitmq:3.6.5-management
@@ -11,6 +16,8 @@ services:
 
   analyzer:
     image: stiller/tweeteranalyzerdemo_analyzer:v1
+    environment:
+      - TextAnalyticsApiKey
 
   aggregator:
     image: stiller/tweeteranalyzerdemo_aggregator:v2
