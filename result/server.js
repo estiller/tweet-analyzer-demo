@@ -62,12 +62,12 @@ function getTopics() {
       img: 'http://static4.businessinsider.com/image/56c640526e97c625048b822a-480/donald-trump.jpg',
     },
     {
-      topic: 'trump,clinton',
-      img: 'http://www.ydop.com/wp-content/uploads/2016/07/trump-vs-clinton.jpg',
+      topic: 'trump,obama',
+      img: 'http://cdn.cnn.com/cnnnext/dam/assets/170306095528-obama-and-trump-at-inauguration-01-2017-large-169.jpg',
     },
     {
-      topic: 'clinton',
-      img: 'https://lh4.googleusercontent.com/-eXKU4UhFusI/AAAAAAAAAAI/AAAAAAAAATA/1QahWqsqd-I/s0-c-k-no-ns/photo.jpg'
+      topic: 'obama',
+      img: 'https://www.biography.com/.image/t_share/MTE4MDAzNDEwNzg5ODI4MTEw/barack-obama-12782369-1-402.jpg'
     }
   ]
 }
