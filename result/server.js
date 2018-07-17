@@ -26,12 +26,13 @@ io.sockets.on('connection', function (socket) {
 });
 
 
-async.retry({ times: 5, interval: 1000 }, function (callback) {
-  if (amqp) {
-    console.log('amqp is up');
-    callback('', amqp);
-  }
-},//TODO  - fix this setTimeout workaround
+async.retry({ times: 5, interval: 1000 }, 
+  function (callback) {
+    if (amqp) {
+      console.log('amqp is up');
+      callback('', amqp);
+    }
+  },//TODO  - fix this setTimeout workaround
   function (err, result) {
     setTimeout(function () {
       result.connect(rabbitMQServer, function (err, conn) {
@@ -49,7 +50,7 @@ async.retry({ times: 5, interval: 1000 }, function (callback) {
           });
         });
       });
-    }, 7000);
+    }, 10000);
   }
 );
 
@@ -62,12 +63,12 @@ function getTopics() {
       img: 'http://static4.businessinsider.com/image/56c640526e97c625048b822a-480/donald-trump.jpg',
     },
     {
-      topic: 'trump,obama',
-      img: 'http://cdn.cnn.com/cnnnext/dam/assets/170306095528-obama-and-trump-at-inauguration-01-2017-large-169.jpg',
+      topic: 'trump,putin',
+      img: 'https://upload.wikimedia.org/wikipedia/commons/3/35/Vladimir_Putin_and_Donald_Trump_at_the_2017_G-20_Hamburg_Summit_%282%29.jpg',
     },
     {
-      topic: 'obama',
-      img: 'https://www.biography.com/.image/t_share/MTE4MDAzNDEwNzg5ODI4MTEw/barack-obama-12782369-1-402.jpg'
+      topic: 'putin',
+      img: 'https://upload.wikimedia.org/wikipedia/commons/9/9c/Vladimir_Putin_%282017-07-08%29_%28cropped%29.jpg'
     }
   ]
 }

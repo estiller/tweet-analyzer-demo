@@ -6,7 +6,7 @@ import re
 import time
 from redis import Redis
 
-topics = [ 'trump', 'obama' ]
+topics = [ 'trump', 'putin' ]
 
 parser = argparse.ArgumentParser(description='Aggregate analysis performed by the analyzer.')
 parser.add_argument('--rabbitmq', '-r', dest='rabbitmq_host', default='localhost',
