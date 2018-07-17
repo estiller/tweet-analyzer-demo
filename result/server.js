@@ -26,12 +26,13 @@ io.sockets.on('connection', function (socket) {
 });
 
 
-async.retry({ times: 5, interval: 1000 }, function (callback) {
-  if (amqp) {
-    console.log('amqp is up');
-    callback('', amqp);
-  }
-},//TODO  - fix this setTimeout workaround
+async.retry({ times: 5, interval: 1000 }, 
+  function (callback) {
+    if (amqp) {
+      console.log('amqp is up');
+      callback('', amqp);
+    }
+  },//TODO  - fix this setTimeout workaround
   function (err, result) {
     setTimeout(function () {
       result.connect(rabbitMQServer, function (err, conn) {
@@ -49,7 +50,7 @@ async.retry({ times: 5, interval: 1000 }, function (callback) {
           });
         });
       });
-    }, 7000);
+    }, 10000);
   }
 );
 
