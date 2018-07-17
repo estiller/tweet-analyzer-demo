@@ -1,11 +1,16 @@
-FROM microsoft/dotnet:1-sdk
-
+FROM microsoft/dotnet:2.1-sdk AS build-env
 WORKDIR /app
 
-ADD src/ /app/src/
+# Copy csproj and restore as distinct layers
+COPY src/Analyzer/Analyzer.csproj ./
+RUN dotnet restore
 
-RUN dotnet restore -v minimal src/Analyzer/Analyzer.csproj \
-    && dotnet publish -c Release -o /app src/Analyzer/Analyzer.csproj \
-    && rm -rf src/ $HOME/.nuget/
+# Copy everything else and build
+COPY src/Analyzer ./
+RUN dotnet publish -c Release -o out
 
-CMD ["dotnet", "Analyzer.dll", "--rabbitmq", "rabbitmq"]
+# Build runtime image
+FROM microsoft/dotnet:2.1-runtime
+WORKDIR /app
+COPY --from=build-env /app/out .
+ENTRYPOINT ["dotnet", "Analyzer.dll", "--rabbitmq", "rabbitmq"]
