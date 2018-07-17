@@ -60,7 +60,7 @@ configuration = TwitterConfiguration()
 while True:
     try:
         stream = MyStreamer(configuration, channel)
-        stream.statuses.filter(track='trump,obama')
+        stream.statuses.filter(track='trump,putin')
     except:
         print("Unexpected error: ")        
         traceback.print_exc()
